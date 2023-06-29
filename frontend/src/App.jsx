@@ -11,6 +11,7 @@ import FormModal from "./components/FormModal";
 import "./reset.css";
 import "./App.css";
 import ToggleModal from "./components/ToggleModal";
+import Faq from "./pages/Faq";
 
 Modal.setAppElement("#root");
 function App() {
@@ -133,6 +134,7 @@ function App() {
             path="/results"
             element={<Results selectedValues={selectedValues} />}
           />
+          <Route path="/faq" element={<Faq />} />
         </Routes>
       </div>
     </Router>

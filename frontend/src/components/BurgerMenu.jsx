@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import blueAddSymbol from "../assets/blue_add_symbol.png";
 import blueInterrogation from "../assets/blue_interrogation.png";
 
 function BurgerMenu({ burgerOpen }) {
+  const navigate = useNavigate();
   return (
     <div
       className={`transition-container z-10 relative transition-transform duration-500 w-[98vw] mx-auto mt-[50px] bg-[#002743] rounded-lg ${
@@ -33,6 +34,7 @@ function BurgerMenu({ burgerOpen }) {
         <button
           type="button"
           className="flex items-center justify-center gap-3 w-[100%]"
+          onClick={() => navigate("/faq")}
         >
           <img
             src={blueInterrogation}
