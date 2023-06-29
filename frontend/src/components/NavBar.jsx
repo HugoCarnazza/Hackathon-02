@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Hamburger from "hamburger-react";
 import BurgerMenu from "./BurgerMenu";
-import navbarLogo from "../assets/navbar_logo.png";
 import addSymbol from "../assets/add_symbol.png";
 import interrogation from "../assets/interrogation.png";
+import logoEm from "../assets/logo-em2.png";
 
 function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
   const navigate = useNavigate();
@@ -14,9 +14,12 @@ function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
     <>
       <div className="nav flex items-center md:flex-col justify-between fixed top-0 left-0 w-screen md:w-1/5 md:h-screen z-10 md:z-0 text-white  bg-[#002743]">
         <div className="flex flex-col items-center gap-20 md:w-full">
-          <div className="flex flex-col w-full items-center gap-7">
-            <Link to="/" className="w-[40%] my-[8px] md:w-[30%] md:mt-[56px] ">
-              <img src={navbarLogo} alt="logo" />
+          <div className="flex flex-col items-center gap-7">
+            <Link
+              to="/"
+              className="w-[40%] ml-[8px] my-[8px] md:w-[75%] md:mt-[56px] mx-auto"
+            >
+              <img src={logoEm} alt="logo" className="w-[100px] self-center" />
             </Link>
             <p className="hidden md:block text-[24px] text-center">
               EMMAÜS <br />
