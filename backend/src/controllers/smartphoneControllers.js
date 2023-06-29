@@ -34,7 +34,7 @@ const readSystemId = (req, res) => {
 
 const addSmartphonesFromCSV = (req, res) => {
   models.smartphone
-    .addSmartphones(req.body)
+    .addSmartphones(req.body.resultsCsv)
     .then((rows) => {
       res.status(200).send(rows);
     })
