@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReactModal from "react-modal";
@@ -669,11 +670,11 @@ function FormModal({
                 </p>
               </div>
             )}
-            <div className="flex w-[100%] justify-center ggap-10 lg:max-h-[100%] m-[10px]">
+            <div className="flex w-[100%] justify-center gap-10 lg:max-h-[100%]">
               <button
                 type="button"
                 onClick={cancel}
-                className="w-content min-w-[100px] max-w-[80vw] h-content p-[10px] rounded-[10px] border-2 border-solid border-[#002743] hover:bg-[#002743] hover:text-white font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-[#002743]"
+                className="w-content min-w-[100px] max-w-[80vw] h-content p-[10px] rounded-[10px] custom-bg2-color hover:bg-blue-700 font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-white"
               >
                 Annuler
               </button>
@@ -681,10 +682,10 @@ function FormModal({
                 type="button"
                 onClick={validation}
                 disabled={isFormIncomplete()}
-                className={`w-content min-w-[100px] h-content p-[10px] rounded-[10px] border-2 border-solid border-[#002743] font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal ${
+                className={`w-content min-w-[100px] h-content p-[10px] rounded-[10px] border-2 border-solid font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-white ${
                   isFormIncomplete()
-                    ? "bg-gray-400 border-none text-white"
-                    : "text-[#002743] hover:bg-[#002743] hover:text-white "
+                    ? "custom-bg2-color border-none opacity-50 cursor-not-allowed"
+                    : "custom-bg2-color hover:bg-blue-700 "
                 }`}
               >
                 Valider
@@ -702,7 +703,7 @@ function FormModal({
       onRequestClose={cancel}
       style={customModalStyles}
       ariaHideApp={false}
-      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit border-none rounded-2xl m-[10px] py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
+      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit lg:h-fit border-none rounded-2xl m-[10px] py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
     >
       {content()}
     </ReactModal>
