@@ -44,7 +44,8 @@ function App() {
   const [screenSize, setScreenSize] = useState("");
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedConditionning, setSelectedConditionning] = useState("");
-  const [priceRefecence, setPriceRefecence] = useState("");
+  const [priceReference, setPriceReference] = useState("");
+  const [priceEstimate, setPriceEstimate] = useState("");
 
   const resetFormModal = () => {
     setModalFormOpen(true);
@@ -57,7 +58,7 @@ function App() {
     setScreenSize("");
     setSelectedNetwork("");
     setSelectedConditionning("");
-    setPriceRefecence("");
+    setPriceReference("");
   };
   // eslint-disable-next-line no-unused-vars
   const [csvUrl, setCsvUrl] = useState("");
@@ -77,7 +78,8 @@ function App() {
           screenSize={screenSize}
           selectedNetwork={selectedNetwork}
           selectedConditionning={selectedConditionning}
-          priceRefecence={priceRefecence}
+          priceReference={priceReference}
+          priceEstimate={priceEstimate}
           setSelectedSystemId={setSelectedSystemId}
           setSelectedBrand={setSelectedBrand}
           setSelectedModel={setSelectedModel}
@@ -87,7 +89,8 @@ function App() {
           setScreenSize={setScreenSize}
           setSelectedNetwork={setSelectedNetwork}
           setSelectedConditionning={setSelectedConditionning}
-          setPriceRefecence={setPriceRefecence}
+          setPriceReference={setPriceReference}
+          setPriceEstimate={setPriceEstimate}
         />
         <NavBar />
         <Routes>
