@@ -34,6 +34,7 @@ function FormModal({
   setSelectedConditionning,
   setPriceReference,
   setPriceEstimate,
+  urlSent,
 }) {
   const customModalStyles = {
     overlay: {
@@ -58,7 +59,7 @@ function FormModal({
       .catch((err) => {
         console.error(err.message);
       });
-  }, []);
+  }, [urlSent]);
 
   const handleSystemChange = (event) => {
     const systemId = parseInt(event.target.value, 10);
@@ -177,7 +178,7 @@ function FormModal({
     return (
       <div>
         {isLoaded && (
-          <div className="flex flex-col gap-5 items-center w-[100%] lg:max-h-[100%]">
+          <div className="flex flex-col gap-4 items-center w-[100%] lg:max-h-[100%]">
             <div className="flex justify-between">
               <label className="flex justify-center">
                 <input
