@@ -664,7 +664,7 @@ function FormModal({
                 </p>
               </div>
             )}
-            <div className="flex justify-between w-[100%] lg:pl-[20%] lg:pr-[20%] lg:max-h-[100%] m-[10px]">
+            <div className="flex w-[100%] justify-center gap-10 lg:max-h-[100%] m-[10px]">
               <button
                 type="button"
                 onClick={cancel}
