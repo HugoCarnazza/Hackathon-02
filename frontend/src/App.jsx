@@ -66,7 +66,7 @@ function App() {
   };
   // eslint-disable-next-line no-unused-vars
   const [csvUrl, setCsvUrl] = useState("");
-
+  const [burgerOpen, setBurgerOpen] = useState(false);
   return (
     <Router>
       <div className="App overflow-hidden">
@@ -106,7 +106,11 @@ function App() {
           setModalFormOpen={setModalFormOpen}
           resetFormModal={resetFormModal}
         />
-        <NavBar />
+        <NavBar
+          openModalToggle={openModalToggle}
+          burgerOpen={burgerOpen}
+          setBurgerOpen={setBurgerOpen}
+        />
         <Routes>
           <Route
             exact

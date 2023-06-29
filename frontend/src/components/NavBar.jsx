@@ -29,6 +29,7 @@ function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
             <button
               type="button"
               className="flex items-center align-baseline gap-3 w-[100%]"
+              onClick={openModalToggle}
             >
               <img src={addSymbol} alt="symbole plus" className="w-[20px]" />
               <p>Estimer un smartphone</p>
@@ -61,7 +62,11 @@ function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
           />
         </div>
       </div>
-      <BurgerMenu burgerOpen={burgerOpen} setBurgerOpen={setBurgerOpen} />
+      <BurgerMenu
+        burgerOpen={burgerOpen}
+        setBurgerOpen={setBurgerOpen}
+        openModalToggle={openModalToggle}
+      />
     </>
   );
 }
