@@ -46,7 +46,7 @@ function FormModal({
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/smartphone")
+      .get(`${import.meta.env.VITE_BACKEND_URL}/smartphone`)
       .then((res) => {
         setSmartphone(res.data);
         setIsLoaded(true);
