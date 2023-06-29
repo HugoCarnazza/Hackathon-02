@@ -33,7 +33,6 @@ function FormModal({
   setSelectedConditionning,
   setPriceReference,
   setPriceEstimate,
-  urlSent,
 }) {
   const customModalStyles = {
     overlay: {
@@ -58,7 +57,7 @@ function FormModal({
       .catch((err) => {
         console.error(err.message);
       });
-  }, [urlSent]);
+  }, []);
 
   const handleSystemChange = (event) => {
     const systemId = parseInt(event.target.value, 10);

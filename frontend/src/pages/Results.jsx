@@ -1,7 +1,25 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import "../styles/Results.scss";
 
+function getCategory(priceEstimate) {
+  if (priceEstimate <= 90) {
+    return "1-HC";
+  }
+  if (priceEstimate <= 165) {
+    return "2-C";
+  }
+  if (priceEstimate <= 255) {
+    return "3-B";
+  }
+  if (priceEstimate <= 375) {
+    return "4-A";
+  }
+  return "5-Premium";
+}
+
 function Results({ selectedValues }) {
+  const category = getCategory(selectedValues.price_estimate);
   return (
     <div className="page-container">
       <h2>Résultats</h2>
@@ -16,11 +34,16 @@ function Results({ selectedValues }) {
           <p>Réseau : {selectedValues.network}</p>
           <p>Conditionnement : {selectedValues.conditionning}</p>
           <p>Prix de référence : {selectedValues.price_reference} euros</p>
-          <p>Prix estimé : {selectedValues.price_estimate} euros</p>
         </div>
-        <div className="results-images">
-          <img src="src/assets/iphone.png" alt="Logo" />
-          <img src="src/assets/iphone2.png" alt="Logo" />
+        <div className="results-right">
+          <div className="results-images">
+            <img src="src/assets/iphone.png" alt="Logo" />
+            <img src="src/assets/iphone2.png" alt="Logo" />
+          </div>
+          <div className="results-description">
+            <p>Catégorie : {category}</p>
+            <p>Prix estimé : {selectedValues.price_estimate} euros</p>
+          </div>
         </div>
       </div>
     </div>
