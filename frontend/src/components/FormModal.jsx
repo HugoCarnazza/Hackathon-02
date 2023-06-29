@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReactModal from "react-modal";
 
@@ -39,6 +40,8 @@ function FormModal({
   const [isLoaded, setIsLoaded] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -97,6 +100,7 @@ function FormModal({
       price_reference: priceRefecence,
     });
     setModalFormOpen(false);
+    navigate("/results");
   };
 
   const cancel = () => {

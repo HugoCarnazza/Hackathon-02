@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import UploadCSV from "./pages/UploadCSV";
+import Results from "./pages/Results";
 import NavBar from "./components/NavBar";
 import FormModal from "./components/FormModal";
 
@@ -10,7 +11,7 @@ import "./reset.css";
 import "./App.css";
 
 function App() {
-  const [modalFormOpen, setModalFormOpen] = useState(false);
+  const [modalFormOpen, setModalFormOpen] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [selectedValues, setSelectedValues] = useState({
     brand: null,
@@ -36,6 +37,7 @@ function App() {
   const [priceRefecence, setPriceRefecence] = useState("");
 
   const [csvUrl, setCsvUrl] = useState("");
+
   return (
     <Router>
       <div className="App overflow-hidden">
@@ -71,6 +73,10 @@ function App() {
         <Route
           path="/upload"
           element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
+        />
+        <Route
+          path="/results"
+          element={<Results selectedValues={selectedValues} />}
         />
       </Routes>
     </Router>
