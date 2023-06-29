@@ -12,7 +12,7 @@ function NavBar({ burgerOpen, setBurgerOpen, openModalToggle }) {
   const navigate = useNavigate();
   return (
     <>
-      <div className="nav flex items-center md:flex-col justify-between fixed top-0 left-0 w-screen md:w-1/5 h-65px md:h-screen z-10 md:z-0 text-white bg-[#002743]">
+      <div className="nav flex items-center md:flex-col justify-between fixed top-0 left-0 w-screen md:w-1/5 md:h-screen z-10 md:z-0 text-white  bg-[#002743]">
         <div className="flex flex-col items-center gap-20 md:w-full">
           <div className="flex flex-col w-full items-center gap-7">
             <Link to="/" className="w-[40%] my-[8px] md:w-[30%] md:mt-[56px] ">
