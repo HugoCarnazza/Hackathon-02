@@ -13,7 +13,7 @@ function BurgerMenu({ burgerOpen, setBurgerOpen, openModalToggle }) {
       }`}
     >
       <div
-        className={`w-[90vw] shadow-md drop-shadow-sm rounded-lg flex flex-col items-center mx-auto font-bold text-xl px-[20px] py-[10px] justify-between gap-4 mt-[24px] text-[#00ACB0] ${
+        className={`w-[90vw] shadow-md drop-shadow-sm rounded-lg flex flex-col items-center mx-auto font-bold text-2xl px-[20px] py-[10px] justify-between gap-4 mt-[24px] text-[#00ACB0] ${
           burgerOpen ? "" : "hidden"
         }`}
       >
