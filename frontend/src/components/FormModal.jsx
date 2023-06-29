@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReactModal from "react-modal";
 import LogoIOS from "../assets/logo-ios.png";
@@ -32,6 +33,7 @@ function FormModal({
   setSelectedConditionning,
   setPriceReference,
   setPriceEstimate,
+  urlSent,
 }) {
   const customModalStyles = {
     overlay: {
@@ -44,6 +46,8 @@ function FormModal({
 
   const [showModal, setShowModal] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/smartphone`)
@@ -54,7 +58,7 @@ function FormModal({
       .catch((err) => {
         console.error(err.message);
       });
-  }, []);
+  }, [urlSent]);
 
   const handleSystemChange = (event) => {
     const systemId = parseInt(event.target.value, 10);
@@ -134,6 +138,7 @@ function FormModal({
       price_estimate: priceEstimate,
     });
     setModalFormOpen(false);
+    navigate("/results");
   };
 
   const cancel = () => {

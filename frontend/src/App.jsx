@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -5,11 +6,13 @@ import Modal from "react-modal";
 import Home from "./pages/Home";
 // eslint-disable-next-line no-unused-vars
 import UploadCSV from "./pages/UploadCSV";
+import Results from "./pages/Results";
+import NavBar from "./components/NavBar";
 import FormModal from "./components/FormModal";
 import "./reset.css";
 import "./App.css";
 import ToggleModal from "./components/ToggleModal";
-import NavBar from "./components/NavBar";
+import Faq from "./pages/Faq";
 
 Modal.setAppElement("#root");
 function App() {
@@ -47,6 +50,9 @@ function App() {
   const [priceReference, setPriceReference] = useState("");
   const [priceEstimate, setPriceEstimate] = useState("");
 
+  const [urlSent, setUrlSent] = useState(false);
+  const [burgerOpen, setBurgerOpen] = useState(false);
+
   const resetFormModal = () => {
     setModalFormOpen(true);
     setSelectedSystemId(null);
@@ -62,6 +68,7 @@ function App() {
   };
   // eslint-disable-next-line no-unused-vars
   const [csvUrl, setCsvUrl] = useState("");
+
   return (
     <Router>
       <div className="App overflow-hidden">
@@ -91,8 +98,21 @@ function App() {
           setSelectedConditionning={setSelectedConditionning}
           setPriceReference={setPriceReference}
           setPriceEstimate={setPriceEstimate}
+          urlSent={urlSent}
         />
-        <NavBar />
+        <ToggleModal
+          openModalToggle={openModalToggle}
+          closeModalToggle={closeModalToggle}
+          modalToggleIsOpen={modalToggleIsOpen}
+          setModalToggleIsOpen={setModalToggleIsOpen}
+          setModalFormOpen={setModalFormOpen}
+          resetFormModal={resetFormModal}
+        />
+        <NavBar
+          burgerOpen={burgerOpen}
+          setBurgerOpen={setBurgerOpen}
+          openModalToggle={openModalToggle}
+        />
         <Routes>
           <Route
             exact
@@ -106,17 +126,22 @@ function App() {
           />
           <Route
             path="/upload"
-            element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
+            element={
+              <UploadCSV
+                csvUrl={csvUrl}
+                setCsvUrl={setCsvUrl}
+                urlSent={urlSent}
+                setUrlSent={setUrlSent}
+              />
+            }
           />
+
+          <Route
+            path="/results"
+            element={<Results selectedValues={selectedValues} />}
+          />
+          <Route path="/faq" element={<Faq />} />
         </Routes>
-        <ToggleModal
-          openModalToggle={openModalToggle}
-          closeModalToggle={closeModalToggle}
-          modalToggleIsOpen={modalToggleIsOpen}
-          setModalToggleIsOpen={setModalToggleIsOpen}
-          setModalFormOpen={setModalFormOpen}
-          resetFormModal={resetFormModal}
-        />
       </div>
     </Router>
   );
