@@ -194,7 +194,7 @@ function FormModal({
                   src={LogoAndroid}
                   alt="android-logo"
                   className={`${
-                    selectedSystemId === 2 ? "opacity-100" : "opacity-50"
+                    selectedSystemId === 2 ? "opacity-100" : "opacity-40"
                   } hover:opacity-100 hover:cursor-pointer py-2 px-4 rounded w-[100px] lg:w-[120px]`}
                 />
               </label>
@@ -212,7 +212,7 @@ function FormModal({
                   src={LogoIOS}
                   alt="ios-logo"
                   className={`${
-                    selectedSystemId === 1 ? "opacity-100" : "opacity-50"
+                    selectedSystemId === 1 ? "opacity-100" : "opacity-40"
                   } hover:opacity-100 hover:cursor-pointer py-2 px-4 rounded w-[100px] lg:w-[120px]`}
                 />
               </label>
