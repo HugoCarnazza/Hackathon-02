@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Link, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import Hamburger from "hamburger-react";
 import BurgerMenu from "./BurgerMenu";
 import addSymbol from "../assets/add_symbol.png";
@@ -30,7 +29,6 @@ function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
             <button
               type="button"
               className="flex items-center align-baseline gap-3 w-[100%]"
-              onClick={() => openModalToggle()}
             >
               <img src={addSymbol} alt="symbole plus" className="w-[20px]" />
               <p>Estimer un smartphone</p>
@@ -63,19 +61,9 @@ function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
           />
         </div>
       </div>
-      <BurgerMenu
-        burgerOpen={burgerOpen}
-        setBurgerOpen={setBurgerOpen}
-        openModalToggle={openModalToggle}
-      />
+      <BurgerMenu burgerOpen={burgerOpen} setBurgerOpen={setBurgerOpen} />
     </>
   );
 }
-
-NavBar.propTypes = {
-  burgerOpen: PropTypes.bool.isRequired,
-  setBurgerOpen: PropTypes.func.isRequired,
-  openModalToggle: PropTypes.func.isRequired,
-};
 
 export default NavBar;
