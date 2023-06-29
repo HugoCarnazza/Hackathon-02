@@ -67,42 +67,53 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
   };
 
   return (
-    <div className="md:ml-[20%] mx-auto">
-      <div>
-        <h1 className="mx-auto text-center font-bold text-xl">
+    <div className="mx-auto px-4">
+      <div className="fixed top-[65px] left-[8px] md:left-[22%]">
+        <h1 className="mx-auto text-center font-bold text-xl mb-5">
           Enrichissez votre base de données
         </h1>
-        <p>
-          1. Rendez-vous sur le lien suivant :{" "}
-          <a
-            href="https://docs.google.com/spreadsheets/d/1f3ATnddcekf3OuJkntZyLNDpdGF0ya-b/edit#gid=1244544131"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Cliquez ici
-          </a>
-        </p>
-        <p>2. Cliquez sur "Fichier" {">"} "Créer une copie"</p>
-        <p>
-          3. Renseignez les valeurs des smartphones que vous souhaitez ajouter à
-          votre base de données en remplissant soigneusement tous les champs.
-        </p>
-        <p>4. Cliquez sur "Fichier" {">"} "Créer une copie" </p>
-        <p>
-          5. Sélectionnez "Document Entier" et "Valeurs séparées par des
-          virgules (.csv)" puis cliquez sur "Publier"{" "}
-        </p>
-        <p>
-          6. Copiez le lien ainsi obtenu, collez-le dans l'input ci-dessous et
-          cliquez sur "Valider":
-        </p>
-        <div>
+        <div className="flex flex-col gap-5">
+          <p>
+            1. Rendez-vous sur le lien suivant :{" "}
+            <a
+              href="https://docs.google.com/spreadsheets/d/1f3ATnddcekf3OuJkntZyLNDpdGF0ya-b/edit?usp=sharing&ouid=115175269734328738233&rtpof=true&sd=true"
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-500"
+            >
+              Cliquez ici
+            </a>
+          </p>
+          <p>2. Cliquez sur "Fichier" {">"} "Créer une copie"</p>
+          <p>
+            3. Renseignez les valeurs des smartphones que vous souhaitez ajouter
+            à votre base de données en remplissant soigneusement tous les
+            champs.
+          </p>
+          <p>
+            4. Cliquez sur "Fichier" {">"} "Partager" {">"} "Publier sur le Web"
+          </p>
+          <p>
+            5. Sélectionnez "Document Entier" et "Valeurs séparées par des
+            virgules (.csv)" puis cliquez sur "Publier"{" "}
+          </p>
+          <p>
+            6. Copiez le lien ainsi obtenu, collez-le dans l'input ci-dessous et
+            cliquez sur "Valider":
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-2 mt-[24px]">
           <input
             type="text"
             value={csvUrl}
             onChange={(e) => setCsvUrl(e.target.value)}
+            className="border-2 border-gray-300 rounded-lg w-[200px]"
           />
-          <button type="button" onClick={() => handleDataBaseUpload(csvUrl)}>
+          <button
+            type="button"
+            onClick={() => handleDataBaseUpload(csvUrl)}
+            className=""
+          >
             Valider
           </button>
         </div>
