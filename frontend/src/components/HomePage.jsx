@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/HomePage.scss";
 import Lottie from "react-lottie-player";
 import animationData from "../assets/25889-phone-flow-3d.json";
@@ -12,7 +13,9 @@ function HomePage({ openModalToggle }) {
         <button type="button" onClick={openModalToggle}>
           Commencer l'estimation
         </button>
-        <button type="button">Ajouter des références</button>
+        <button type="button">
+          <Link to="/upload"> Ajouter des références </Link>
+        </button>
       </div>
       <div className="lottie-container">
         <Lottie

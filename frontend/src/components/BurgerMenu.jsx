@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import blueAddSymbol from "../assets/blue_add_symbol.png";
 import blueInterrogation from "../assets/blue_interrogation.png";
@@ -22,13 +23,13 @@ function BurgerMenu({ burgerOpen }) {
           <img src={blueAddSymbol} alt="symbole plus" className="w-[18px]" />
           <p>Estimer un smartphone</p>
         </button>
-        <button
-          type="button"
-          className="flex items-center align-baseline gap-2 w-[100%] justify-center "
+        <Link
+          to="/upload"
+          className="flex items-center justify-center gap-3 w-[100%]"
         >
           <img src={blueAddSymbol} alt="symbole plus" className="w-[18px]" />
           <p>Ajouter des références</p>
-        </button>
+        </Link>
         <button
           type="button"
           className="flex items-center justify-center gap-3 w-[100%]"
