@@ -703,7 +703,7 @@ function FormModal({
       onRequestClose={cancel}
       style={customModalStyles}
       ariaHideApp={false}
-      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit border-none rounded-2xl py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white"
+      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit border-none rounded-2xl  py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white"
     >
       {content()}
     </ReactModal>
