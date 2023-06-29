@@ -659,11 +659,13 @@ function FormModal({
             </div>
             {showModal && (
               <div>
-                <p className="text-[#002743] text-justify lg:text-justify">
+                <p className="text-[#002743] text-center">
                   Vous pouvez récupérer un prix sur
                   <a
                     href="https://www.kimovil.com/fr/"
                     className="text-blue-500 underline ml-2"
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     https://www.kimovil.com/fr/
                   </a>
