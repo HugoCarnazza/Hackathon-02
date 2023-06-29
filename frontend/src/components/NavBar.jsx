@@ -8,7 +8,7 @@ import navbarLogo from "../assets/navbar_logo.png";
 import addSymbol from "../assets/add_symbol.png";
 import interrogation from "../assets/interrogation.png";
 
-function NavBar({ burgerOpen, setBurgerOpen, openModalToggle }) {
+function NavBar({ openModalToggle, burgerOpen, setBurgerOpen }) {
   const navigate = useNavigate();
   return (
     <>
@@ -56,6 +56,7 @@ function NavBar({ burgerOpen, setBurgerOpen, openModalToggle }) {
           <Hamburger
             toggled={burgerOpen}
             toggle={() => setBurgerOpen(!burgerOpen)}
+            openModalToggle={openModalToggle}
           />
         </div>
       </div>
