@@ -49,6 +49,7 @@ function App() {
   const [priceEstimate, setPriceEstimate] = useState("");
 
   const [urlSent, setUrlSent] = useState(false);
+  const [burgerOpen, setBurgerOpen] = useState(false);
 
   const resetFormModal = () => {
     setModalFormOpen(true);
@@ -105,7 +106,11 @@ function App() {
           setModalFormOpen={setModalFormOpen}
           resetFormModal={resetFormModal}
         />
-        <NavBar />
+        <NavBar
+          burgerOpen={burgerOpen}
+          setBurgerOpen={setBurgerOpen}
+          openModalToggle={openModalToggle}
+        />
         <Routes>
           <Route
             exact
