@@ -18,7 +18,6 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
       for (let j = 0; j < values.length; j++) {
         const key = keys[j];
         let value = values[j];
-
         // Conversion de certaines valeurs en types appropriés (par exemple, 'system_id' en nombre)
         if (key === "system_id") {
           value = Number(value);
@@ -70,7 +69,9 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
   return (
     <div className="md:ml-[20%] mx-auto">
       <div>
-        <h1>Enrichissez votre base de données</h1>
+        <h1 className="mx-auto text-center font-bold text-xl">
+          Enrichissez votre base de données
+        </h1>
         <p>
           1. Rendez-vous sur le lien suivant :{" "}
           <a
