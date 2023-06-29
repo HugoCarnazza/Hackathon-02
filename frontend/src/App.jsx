@@ -5,11 +5,12 @@ import Modal from "react-modal";
 import Home from "./pages/Home";
 // eslint-disable-next-line no-unused-vars
 import UploadCSV from "./pages/UploadCSV";
+import Results from "./pages/Results";
+import NavBar from "./components/NavBar";
 import FormModal from "./components/FormModal";
 import "./reset.css";
 import "./App.css";
 import ToggleModal from "./components/ToggleModal";
-import NavBar from "./components/NavBar";
 
 Modal.setAppElement("#root");
 function App() {
@@ -62,6 +63,7 @@ function App() {
   };
   // eslint-disable-next-line no-unused-vars
   const [csvUrl, setCsvUrl] = useState("");
+
   return (
     <Router>
       <div className="App overflow-hidden">
@@ -92,6 +94,14 @@ function App() {
           setPriceReference={setPriceReference}
           setPriceEstimate={setPriceEstimate}
         />
+        <ToggleModal
+          openModalToggle={openModalToggle}
+          closeModalToggle={closeModalToggle}
+          modalToggleIsOpen={modalToggleIsOpen}
+          setModalToggleIsOpen={setModalToggleIsOpen}
+          setModalFormOpen={setModalFormOpen}
+          resetFormModal={resetFormModal}
+        />
         <NavBar />
         <Routes>
           <Route
@@ -108,15 +118,12 @@ function App() {
             path="/upload"
             element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
           />
+
+          <Route
+            path="/results"
+            element={<Results selectedValues={selectedValues} />}
+          />
         </Routes>
-        <ToggleModal
-          openModalToggle={openModalToggle}
-          closeModalToggle={closeModalToggle}
-          modalToggleIsOpen={modalToggleIsOpen}
-          setModalToggleIsOpen={setModalToggleIsOpen}
-          setModalFormOpen={setModalFormOpen}
-          resetFormModal={resetFormModal}
-        />
       </div>
     </Router>
   );
