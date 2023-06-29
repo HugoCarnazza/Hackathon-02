@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Hamburger from "hamburger-react";
@@ -7,7 +8,7 @@ import navbarLogo from "../assets/navbar_logo.png";
 import addSymbol from "../assets/add_symbol.png";
 import interrogation from "../assets/interrogation.png";
 
-function NavBar() {
+function NavBar({ openModalToggle }) {
   const [burgerOpen, setBurgerOpen] = useState(false);
   return (
     <>
@@ -21,6 +22,7 @@ function NavBar() {
           <div className="navbar-buttons hidden w-[100%] px-7 md:flex flex-col gap-5 text-lg">
             <button
               type="button"
+              onClick={openModalToggle}
               className="flex items-center align-baseline gap-2 w-[100%] "
             >
               <img src={addSymbol} alt="symbole plus" className="w-[14px]" />
@@ -56,6 +58,7 @@ function NavBar() {
           <Hamburger
             toggled={burgerOpen}
             toggle={() => setBurgerOpen(!burgerOpen)}
+            openModalToggle={openModalToggle}
           />
         </div>
       </div>

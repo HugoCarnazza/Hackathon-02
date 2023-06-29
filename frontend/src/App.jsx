@@ -89,7 +89,7 @@ function App() {
           setSelectedConditionning={setSelectedConditionning}
           setPriceRefecence={setPriceRefecence}
         />
-        <NavBar />
+        <NavBar openModalToggle={openModalToggle} />
         <Routes>
           <Route
             exact
