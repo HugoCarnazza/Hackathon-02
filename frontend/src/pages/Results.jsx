@@ -4,18 +4,18 @@ import "../styles/Results.scss";
 
 function getCategory(priceEstimate) {
   if (priceEstimate <= 90) {
-    return "1-HC";
+    return "category-1-HC";
   }
   if (priceEstimate <= 165) {
-    return "2-C";
+    return "category-2-C";
   }
   if (priceEstimate <= 255) {
-    return "3-B";
+    return "category-3-B";
   }
   if (priceEstimate <= 375) {
-    return "4-A";
+    return "category-4-A";
   }
-  return "5-Premium";
+  return "category-5-Premium";
 }
 
 function Results({ selectedValues }) {
@@ -40,9 +40,13 @@ function Results({ selectedValues }) {
             <img src="src/assets/iphone.png" alt="Logo" />
             <img src="src/assets/iphone2.png" alt="Logo" />
           </div>
-          <div className="results-description">
-            <p>Catégorie : {category}</p>
-            <p>Prix estimé : {selectedValues.price_estimate} euros</p>
+          <div className={`results-description ${category}`}>
+            <div className="category">
+              <p>Catégorie : {category}</p>
+            </div>
+            <div className="price">
+              <p>Prix estimé : {selectedValues.price_estimate} euros</p>
+            </div>
           </div>
         </div>
       </div>

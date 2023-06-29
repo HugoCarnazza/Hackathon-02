@@ -12,6 +12,12 @@ function ToggleModal({
   setModalFormOpen,
   resetFormModal,
 }) {
+  const customModalStyles = {
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      zIndex: 1000,
+    },
+  };
   const [toggleStates, setToggleStates] = useState({
     os: false,
     ram: false,
@@ -45,7 +51,7 @@ function ToggleModal({
         closeModalToggle();
         resetToggleStates();
       }}
-      // style={customStyles}
+      style={customModalStyles}
       className=" w-[95%] border-2 border-solid border-blue-950 xl:border-none xl:p-0 h-fit xl:custom-bg2-color xl:w-[80%] rounded-2xl fixed top-[45%] xl:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex"
       contentLabel="Modal"
     >
