@@ -4,18 +4,21 @@ import "../styles/Results.scss";
 
 function getCategory(priceEstimate) {
   if (priceEstimate <= 90) {
-    return "category-1-HC";
+    return { className: "category-1-HC", displayName: "Catégorie :<br/>1-HC" };
   }
   if (priceEstimate <= 165) {
-    return "category-2-C";
+    return { className: "category-2-C", displayName: "Catégorie :<br/>2-C" };
   }
   if (priceEstimate <= 255) {
-    return "category-3-B";
+    return { className: "category-3-B", displayName: "Catégorie :<br/>3-B" };
   }
   if (priceEstimate <= 375) {
-    return "category-4-A";
+    return { className: "category-4-A", displayName: "Catégorie :<br/>4-A" };
   }
-  return "category-5-Premium";
+  return {
+    className: "category-5-Premium",
+    displayName: "Catégorie : Premium",
+  };
 }
 
 function Results({ selectedValues }) {
@@ -40,9 +43,12 @@ function Results({ selectedValues }) {
             <img src="src/assets/iphone.png" alt="Logo" />
             <img src="src/assets/iphone2.png" alt="Logo" />
           </div>
-          <div className={`results-description ${category}`}>
-            <div className="category">
-              <p>Catégorie : {category}</p>
+          <div className="results-description">
+            <div className={`category ${category}`}>
+              <p
+                className={category.className}
+                dangerouslySetInnerHTML={{ __html: category.displayName }}
+              />
             </div>
             <div className="price">
               <p>Prix estimé : {selectedValues.price_estimate} euros</p>
