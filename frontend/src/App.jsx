@@ -1,17 +1,28 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Modal from "react-modal";
 import Home from "./pages/Home";
+// eslint-disable-next-line no-unused-vars
 import UploadCSV from "./pages/UploadCSV";
 import Results from "./pages/Results";
 import NavBar from "./components/NavBar";
 import FormModal from "./components/FormModal";
-
 import "./reset.css";
 import "./App.css";
+import ToggleModal from "./components/ToggleModal";
 
+Modal.setAppElement("#root");
 function App() {
-  const [modalFormOpen, setModalFormOpen] = useState(true);
+  const [modalToggleIsOpen, setModalToggleIsOpen] = useState(false);
+  const openModalToggle = () => {
+    setModalToggleIsOpen(true);
+  };
+
+  const closeModalToggle = () => {
+    setModalToggleIsOpen(false);
+  };
+  const [modalFormOpen, setModalFormOpen] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [selectedValues, setSelectedValues] = useState({
     brand: null,
@@ -34,8 +45,23 @@ function App() {
   const [screenSize, setScreenSize] = useState("");
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedConditionning, setSelectedConditionning] = useState("");
-  const [priceRefecence, setPriceRefecence] = useState("");
+  const [priceReference, setPriceReference] = useState("");
+  const [priceEstimate, setPriceEstimate] = useState("");
 
+  const resetFormModal = () => {
+    setModalFormOpen(true);
+    setSelectedSystemId(null);
+    setSelectedBrand(null);
+    setSelectedModel(null);
+    setSelectedVersionSystem("");
+    setSelectedRam("");
+    setSelectedMemory("");
+    setScreenSize("");
+    setSelectedNetwork("");
+    setSelectedConditionning("");
+    setPriceReference("");
+  };
+  // eslint-disable-next-line no-unused-vars
   const [csvUrl, setCsvUrl] = useState("");
 
   return (
@@ -54,7 +80,8 @@ function App() {
           screenSize={screenSize}
           selectedNetwork={selectedNetwork}
           selectedConditionning={selectedConditionning}
-          priceRefecence={priceRefecence}
+          priceReference={priceReference}
+          priceEstimate={priceEstimate}
           setSelectedSystemId={setSelectedSystemId}
           setSelectedBrand={setSelectedBrand}
           setSelectedModel={setSelectedModel}
@@ -64,21 +91,40 @@ function App() {
           setScreenSize={setScreenSize}
           setSelectedNetwork={setSelectedNetwork}
           setSelectedConditionning={setSelectedConditionning}
-          setPriceRefecence={setPriceRefecence}
+          setPriceReference={setPriceReference}
+          setPriceEstimate={setPriceEstimate}
+        />
+        <ToggleModal
+          openModalToggle={openModalToggle}
+          closeModalToggle={closeModalToggle}
+          modalToggleIsOpen={modalToggleIsOpen}
+          setModalToggleIsOpen={setModalToggleIsOpen}
+          setModalFormOpen={setModalFormOpen}
+          resetFormModal={resetFormModal}
         />
         <NavBar />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <Home
+                openModalToggle={openModalToggle}
+                closeModalToggle={closeModalToggle}
+              />
+            }
+          />
+          <Route
+            path="/upload"
+            element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
+          />
+
+          <Route
+            path="/results"
+            element={<Results selectedValues={selectedValues} />}
+          />
+        </Routes>
       </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/upload"
-          element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
-        />
-        <Route
-          path="/results"
-          element={<Results selectedValues={selectedValues} />}
-        />
-      </Routes>
     </Router>
   );
 }
