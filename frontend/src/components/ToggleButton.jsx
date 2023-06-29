@@ -48,7 +48,7 @@ function ToggleButton({ label, isChecked, handleToggleChange, id }) {
             isChecked ? "bg-blue-500" : "bg-gray-200"
           } relative inline-flex items-center h-6 rounded-full w-11`}
         >
-          <Toggle checked={isChecked} className="sr-only" />
+          <Toggle defaultChecked={isChecked} className="sr-only" />
           <span
             className={`${
               isChecked ? "translate-x-6" : "translate-x-1"

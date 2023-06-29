@@ -1,14 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import Hamburger from "hamburger-react";
 import BurgerMenu from "./BurgerMenu";
 import navbarLogo from "../assets/navbar_logo.png";
 import addSymbol from "../assets/add_symbol.png";
 import interrogation from "../assets/interrogation.png";
 
-function NavBar() {
-  const [burgerOpen, setBurgerOpen] = useState(false);
+function NavBar({ burgerOpen, setBurgerOpen, openModalToggle }) {
   const navigate = useNavigate();
   return (
     <>
@@ -27,6 +27,7 @@ function NavBar() {
             <button
               type="button"
               className="flex items-center align-baseline gap-3 w-[100%]"
+              onClick={() => openModalToggle()}
             >
               <img src={addSymbol} alt="symbole plus" className="w-[20px]" />
               <p>Estimer un smartphone</p>
@@ -58,9 +59,19 @@ function NavBar() {
           />
         </div>
       </div>
-      <BurgerMenu burgerOpen={burgerOpen} setBurgerOpen={setBurgerOpen} />
+      <BurgerMenu
+        burgerOpen={burgerOpen}
+        setBurgerOpen={setBurgerOpen}
+        openModalToggle={openModalToggle}
+      />
     </>
   );
 }
+
+NavBar.propTypes = {
+  burgerOpen: PropTypes.bool.isRequired,
+  setBurgerOpen: PropTypes.func.isRequired,
+  openModalToggle: PropTypes.func.isRequired,
+};
 
 export default NavBar;

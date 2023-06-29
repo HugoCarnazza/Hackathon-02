@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -50,6 +51,7 @@ function App() {
   const [priceEstimate, setPriceEstimate] = useState("");
 
   const [urlSent, setUrlSent] = useState(false);
+  const [burgerOpen, setBurgerOpen] = useState(false);
 
   const resetFormModal = () => {
     setModalFormOpen(true);
@@ -106,7 +108,11 @@ function App() {
           setModalFormOpen={setModalFormOpen}
           resetFormModal={resetFormModal}
         />
-        <NavBar />
+        <NavBar
+          burgerOpen={burgerOpen}
+          setBurgerOpen={setBurgerOpen}
+          openModalToggle={openModalToggle}
+        />
         <Routes>
           <Route
             exact
