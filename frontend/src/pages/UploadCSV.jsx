@@ -1,12 +1,13 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Papa from "papaparse";
 
 function UploadCSV({ csvUrl, setCsvUrl }) {
+  const [urlSent, setUrlSent] = useState(false);
   function tableauToJson(tableau) {
     const keys = tableau[0]; // Les clés sont définies par le premier tableau
     const result = [];
@@ -48,6 +49,8 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
               // eslint-disable-next-line no-shadow
               .then((response) => {
                 console.log(response);
+                setCsvUrl("");
+                setUrlSent(true);
               })
               .catch((error) => {
                 console.error("Erreur lors de l'envoi des données :", error);
@@ -68,8 +71,8 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
 
   return (
     <div className="mx-auto px-4">
-      <div className="fixed top-[65px] left-[8px] md:left-[22%]">
-        <h1 className="mx-auto text-center font-bold text-xl mb-5">
+      <div className="fixed top-[65px] left-[8px] md:left-[22%] ">
+        <h1 className="mx-auto text-center text-[24px] font-bold mb-10 md:text-[50px] md:text-left text-[#002743]">
           Enrichissez votre base de données
         </h1>
         <div className="flex flex-col gap-5">
@@ -102,7 +105,7 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
             cliquez sur "Valider":
           </p>
         </div>
-        <div className="flex flex-col items-center gap-2 mt-[24px]">
+        <div className="flex flex-col items-center gap-2 mt-[36px]">
           <input
             type="text"
             value={csvUrl}
@@ -112,10 +115,13 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
           <button
             type="button"
             onClick={() => handleDataBaseUpload(csvUrl)}
-            className=""
+            className=" font-medium border border-solid border-[#00ACB0] rounded-full px-4 py-1 text-[#00ACB0] hover:text-white hover:bg-[#00ACB0] hover:border-[#00ACB0]"
           >
             Valider
           </button>
+          <p className={urlSent ? "" : "hidden italic font-thin text-sm"}>
+            Données envoyées !
+          </p>
         </div>
       </div>
     </div>
