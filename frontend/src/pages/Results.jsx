@@ -26,7 +26,10 @@ function Results({ selectedValues }) {
   const category = getCategory(selectedValues.price_estimate);
   return (
     <div className="page-container">
-      <h2>Résultats</h2>
+      <h2 className="hidden xl:block">Résultats</h2>
+      <h2 className="block xl:hidden text-center text-2xl text-blue-950">
+        Résultats
+      </h2>
       <div className="results-container">
         <div className="results">
           <p>Marque : {selectedValues.brand}</p>
