@@ -49,6 +49,8 @@ function App() {
   const [priceReference, setPriceReference] = useState("");
   const [priceEstimate, setPriceEstimate] = useState("");
 
+  const [urlSent, setUrlSent] = useState(false);
+
   const resetFormModal = () => {
     setModalFormOpen(true);
     setSelectedSystemId(null);
@@ -94,6 +96,7 @@ function App() {
           setSelectedConditionning={setSelectedConditionning}
           setPriceReference={setPriceReference}
           setPriceEstimate={setPriceEstimate}
+          urlSent={urlSent}
         />
         <ToggleModal
           openModalToggle={openModalToggle}
@@ -117,7 +120,14 @@ function App() {
           />
           <Route
             path="/upload"
-            element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
+            element={
+              <UploadCSV
+                csvUrl={csvUrl}
+                setCsvUrl={setCsvUrl}
+                urlSent={urlSent}
+                setUrlSent={setUrlSent}
+              />
+            }
           />
 
           <Route

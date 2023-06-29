@@ -1,13 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Papa from "papaparse";
 
-function UploadCSV({ csvUrl, setCsvUrl }) {
-  const [urlSent, setUrlSent] = useState(false);
+function UploadCSV({ csvUrl, setCsvUrl, urlSent, setUrlSent }) {
   function tableauToJson(tableau) {
     const keys = tableau[0]; // Les clés sont définies par le premier tableau
     const result = [];
@@ -131,6 +130,8 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
 UploadCSV.propTypes = {
   csvUrl: PropTypes.string.isRequired,
   setCsvUrl: PropTypes.func.isRequired,
+  urlSent: PropTypes.bool.isRequired,
+  setUrlSent: PropTypes.func.isRequired,
 };
 
 export default UploadCSV;
