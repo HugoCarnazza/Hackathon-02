@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -11,6 +12,7 @@ import FormModal from "./components/FormModal";
 import "./reset.css";
 import "./App.css";
 import ToggleModal from "./components/ToggleModal";
+import Faq from "./pages/Faq";
 
 Modal.setAppElement("#root");
 function App() {
@@ -47,6 +49,9 @@ function App() {
   const [selectedConditionning, setSelectedConditionning] = useState("");
   const [priceReference, setPriceReference] = useState("");
   const [priceEstimate, setPriceEstimate] = useState("");
+
+  const [urlSent, setUrlSent] = useState(false);
+  const [burgerOpen, setBurgerOpen] = useState(false);
 
   const resetFormModal = () => {
     setModalFormOpen(true);
@@ -93,6 +98,7 @@ function App() {
           setSelectedConditionning={setSelectedConditionning}
           setPriceReference={setPriceReference}
           setPriceEstimate={setPriceEstimate}
+          urlSent={urlSent}
         />
         <ToggleModal
           openModalToggle={openModalToggle}
@@ -102,7 +108,11 @@ function App() {
           setModalFormOpen={setModalFormOpen}
           resetFormModal={resetFormModal}
         />
-        <NavBar />
+        <NavBar
+          burgerOpen={burgerOpen}
+          setBurgerOpen={setBurgerOpen}
+          openModalToggle={openModalToggle}
+        />
         <Routes>
           <Route
             exact
@@ -116,13 +126,21 @@ function App() {
           />
           <Route
             path="/upload"
-            element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
+            element={
+              <UploadCSV
+                csvUrl={csvUrl}
+                setCsvUrl={setCsvUrl}
+                urlSent={urlSent}
+                setUrlSent={setUrlSent}
+              />
+            }
           />
 
           <Route
             path="/results"
             element={<Results selectedValues={selectedValues} />}
           />
+          <Route path="/faq" element={<Faq />} />
         </Routes>
       </div>
     </Router>
