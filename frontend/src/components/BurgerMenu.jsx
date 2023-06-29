@@ -8,13 +8,13 @@ function BurgerMenu({ burgerOpen, setBurgerOpen, openModalToggle }) {
   const navigate = useNavigate();
   return (
     <div
-      className={`transition-container z-10 relative transition-transform duration-500 w-[98vw] mx-auto mt-[50px] bg-[#002743] rounded-lg ${
-        burgerOpen ? "translate-x-0" : "translate-x-[1000px]"
+      className={`transition-container z-10 relative transition-transform duration-500 w-[95vw] mx-auto mt-[50px] bg-[#002743] rounded-lg ${
+        burgerOpen ? "transform translate-x-0" : "translate-x-[108%]"
       }`}
     >
       <div
         className={`w-[90vw] shadow-md drop-shadow-sm  rounded-lg flex flex-col items-center mx-auto font-bold text-xl px-[20px] py-[10px] justify-between gap-4 mt-[24px] text-[#00ACB0]  ${
-          burgerOpen ? "translate-x-0" : "translate-x-[1000px]"
+          burgerOpen ? "translate-x-0" : " transform translate-x-[108%]"
         }`}
       >
         <button
@@ -39,7 +39,10 @@ function BurgerMenu({ burgerOpen, setBurgerOpen, openModalToggle }) {
         <button
           type="button"
           className="flex items-center justify-center gap-3 w-[100%]"
-          onClick={() => navigate("/faq")}
+          onClick={() => {
+            navigate("/faq");
+            setBurgerOpen(false);
+          }}
         >
           <img
             src={blueInterrogation}
