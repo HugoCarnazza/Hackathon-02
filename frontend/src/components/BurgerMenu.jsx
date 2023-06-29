@@ -8,12 +8,12 @@ function BurgerMenu({ burgerOpen, setBurgerOpen, openModalToggle }) {
   const navigate = useNavigate();
   return (
     <div
-      className={`transition-container z-10 relative duration-500 w-[95vw] mx-auto mt-[50px] bg-[#002743] rounded-lg ${
+      className={`transition-container z-10 fixed top-0 left-[5vw] duration-500 w-[90vw] mx-auto mt-[50px] bg-[#002743] rounded-lg  ${
         burgerOpen ? "" : "hidden"
       }`}
     >
       <div
-        className={`w-[90vw] shadow-md drop-shadow-sm rounded-lg flex flex-col items-center mx-auto font-bold text-2xl px-[20px] py-[10px] justify-between gap-4 mt-[24px] text-[#00ACB0] ${
+        className={`w-[90vw]  rounded-lg flex flex-col items-center mx-auto font-bold text-2xl px-[20px] py-[10px] justify-between gap-4 my-[16px] text-[#00ACB0] ${
           burgerOpen ? "" : "hidden"
         }`}
       >
