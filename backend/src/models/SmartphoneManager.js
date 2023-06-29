@@ -32,6 +32,26 @@ class SmartphoneManager extends AbstractManager {
     const sqlValues = where.map(({ value }) => value);
     return this.database.query(sqlRequest, sqlValues);
   }
+
+  addSmartphones(smartphonesArray) {
+    const insertPromises = smartphonesArray.map((smartphone) =>
+      this.database.query(
+        `INSERT INTO smartphone (brand, model, system_id, version_system, ram, memory, screen_size, network) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          smartphone.brand,
+          smartphone.model,
+          smartphone.system_id,
+          smartphone.version_system,
+          smartphone.ram,
+          smartphone.memory,
+          smartphone.screen_size,
+          smartphone.network,
+        ]
+      )
+    );
+
+    return Promise.all(insertPromises);
+  }
 }
 
 module.exports = SmartphoneManager;
