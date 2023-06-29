@@ -194,7 +194,7 @@ function FormModal({
                   src={LogoAndroid}
                   alt="android-logo"
                   className={`${
-                    selectedSystemId === 2 ? "opacity-100" : "opacity-50"
+                    selectedSystemId === 2 ? "opacity-100" : "opacity-40"
                   } hover:opacity-100 hover:cursor-pointer py-2 px-4 rounded w-[100px] lg:w-[120px]`}
                 />
               </label>
@@ -212,7 +212,7 @@ function FormModal({
                   src={LogoIOS}
                   alt="ios-logo"
                   className={`${
-                    selectedSystemId === 1 ? "opacity-100" : "opacity-50"
+                    selectedSystemId === 1 ? "opacity-100" : "opacity-40"
                   } hover:opacity-100 hover:cursor-pointer py-2 px-4 rounded w-[100px] lg:w-[120px]`}
                 />
               </label>
@@ -703,7 +703,7 @@ function FormModal({
       onRequestClose={cancel}
       style={customModalStyles}
       ariaHideApp={false}
-      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit border-none rounded-2xl m-[10px] py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
+      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit border-none rounded-2xl  py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white"
     >
       {content()}
     </ReactModal>
