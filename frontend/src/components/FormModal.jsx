@@ -535,7 +535,7 @@ function FormModal({
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-5 lg:max-h-[100%] p-[10px] lg:pt-[20px]">
+            <div className="flex flex-col gap-5 lg:max-h-[100%] p-[10px]">
               <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal lg:text-center text-[#002743] ">
                 Etat de l'appareil :
               </h3>
@@ -626,9 +626,9 @@ function FormModal({
                 </button>
               </div>
             </div>
-            <div>
-              <label className="flex flex-col lg:flex-row justify-center items-center gap-5 lg:max-h-[100%]">
-                <div className="flex justify-center items-center gap-5">
+            <div className="w-[100%] p-[10px]">
+              <label className="flex flex-col lg:flex-row lg:justify-center lg:items-center gap-5 lg:max-h-[100%]">
+                <div className="flex lg:justify-center items-center gap-5">
                   <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal lg:text-right w-content text-[#002743]">
                     Prix de référence
                   </h3>
@@ -659,11 +659,13 @@ function FormModal({
             </div>
             {showModal && (
               <div>
-                <p className="text-[#002743] text-justify lg:text-justify">
+                <p className="text-[#002743] text-center">
                   Vous pouvez récupérer un prix sur
                   <a
                     href="https://www.kimovil.com/fr/"
                     className="text-blue-500 underline ml-2"
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     https://www.kimovil.com/fr/
                   </a>
