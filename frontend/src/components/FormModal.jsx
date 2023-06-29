@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReactModal from "react-modal";
@@ -91,31 +92,33 @@ function FormModal({
     .filter((item) => (selectedBrand ? item.brand === selectedBrand : false))
     .map((item) => item.model);
 
+  const filteredScreenSizes = smartphone
+    .filter((item) => (selectedModel ? item.model === selectedModel : false))
+    .map((item) => item.screen_size);
+
+  const filteredSystemVersion = smartphone
+    .filter((item) => (selectedModel ? item.model === selectedModel : false))
+    .map((item) => item.version_system);
+
   useEffect(() => {
     const calculatePriceEstimate = () => {
       let ponderation = 0;
-      if (selectedConditionning === "Deee") {
-        ponderation = -100;
-      }
-      if (selectedConditionning === "Réparable") {
-        ponderation = -50;
-      }
-      if (selectedConditionning === "Bloqué") {
-        ponderation = -10;
-      }
-      if (selectedConditionning === "Reconditionnable") {
-        ponderation = -5;
-      }
-      if (selectedConditionning === "Reconditionné") {
+      if (selectedConditionning === "DEEE") {
+        ponderation = 100;
+      } else if (selectedConditionning === "Réparable") {
+        ponderation = 50;
+      } else if (selectedConditionning === "Bloqué") {
+        ponderation = 10;
+      } else if (selectedConditionning === "Reconditionnable") {
+        ponderation = 5;
+      } else if (
+        selectedConditionning === "Reconditionné" ||
+        selectedConditionning === "Bon" ||
+        selectedConditionning === "Parfait"
+      ) {
         ponderation = 0;
       }
-      if (selectedConditionning === "Bon") {
-        ponderation = 5;
-      }
-      if (selectedConditionning === "Parfait") {
-        ponderation = 10;
-      }
-      setPriceEstimate(priceReference + (priceReference * ponderation) / 100);
+      setPriceEstimate(priceReference - (priceReference * ponderation) / 100);
     };
 
     calculatePriceEstimate();
@@ -175,7 +178,7 @@ function FormModal({
     return (
       <div>
         {isLoaded && (
-          <div className="flex flex-col gap-4 items-center w-[100%]">
+          <div className="flex flex-col gap-5 items-center w-[100%] lg:max-h-[100%]">
             <div className="flex justify-between">
               <label className="flex justify-center">
                 <input
@@ -191,8 +194,8 @@ function FormModal({
                   src={LogoAndroid}
                   alt="android-logo"
                   className={`${
-                    selectedSystemId === 2 ? "bg-[#002743]" : "bg-white"
-                  } hover:bg-[#002743c2] hover:cursor-pointer text-white font-bold py-2 px-4 rounded w-[30%]`}
+                    selectedSystemId === 2 ? "opacity-100" : "opacity-50"
+                  } hover:opacity-100 hover:cursor-pointer py-2 px-4 rounded w-[100px] lg:w-[120px]`}
                 />
               </label>
               <label className="flex justify-center">
@@ -209,25 +212,12 @@ function FormModal({
                   src={LogoIOS}
                   alt="ios-logo"
                   className={`${
-                    selectedSystemId === 1 ? "bg-[#002743]" : "bg-white"
-                  } hover:bg-[#002743c2] hover:cursor-pointer text-white font-bold py-2 px-4 rounded w-[30%]`}
+                    selectedSystemId === 1 ? "opacity-100" : "opacity-50"
+                  } hover:opacity-100 hover:cursor-pointer py-2 px-4 rounded w-[100px] lg:w-[120px]`}
                 />
               </label>
             </div>
-            <div>
-              <label className="flex justify-center items-center gap-5">
-                <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left w-[100%] text-[#002743]">
-                  System Version:
-                </h3>
-                <input
-                  className="appearance-none w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743]"
-                  type="text"
-                  value={selectedVersionSystem}
-                  onChange={(e) => setSelectedVersionSystem(e.target.value)}
-                />
-              </label>
-            </div>
-            <div className="flex justify-between w-[100%]">
+            <div className="lg:flex lg:justify-between lg:w-[100%] lg:max-h-[100%]">
               <div className="flex flex-col justify-between min-w-min w-320px min-h-min h-340px gap-6 p-[10px]">
                 <div className="flex flex-col gap-5">
                   <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
@@ -279,27 +269,70 @@ function FormModal({
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label className="flex flex-col gap-5">
-                    <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
-                      Ecran (en pouces):
-                    </h3>
-                    <input
-                      className="appearance-none w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743]"
-                      name="screen_size"
-                      type="text"
-                      value={screenSize}
-                      onChange={(event) => setScreenSize(event.target.value)}
-                    />
-                  </label>
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    Ecran (en pouces) :
+                  </h3>
+                  <select
+                    className="w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] "
+                    name="screen_size"
+                    id="screen-size-select"
+                    value={screenSize || ""}
+                    onChange={(event) => setScreenSize(event.target.value)}
+                    style={
+                      selectedModel
+                        ? { color: "#002743" }
+                        : { color: "#A0AEC0" }
+                    }
+                  >
+                    <option value="" className="text-gray-400">
+                      Taille écran "
+                    </option>
+                    {filteredScreenSizes.map((uniqueScreenSize) => (
+                      <option key={uniqueScreenSize} value={uniqueScreenSize}>
+                        {uniqueScreenSize}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    Version système :
+                  </h3>
+                  <select
+                    className="w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] "
+                    name="version_system"
+                    id="system-version-select"
+                    value={selectedVersionSystem || ""}
+                    onChange={(event) =>
+                      setSelectedVersionSystem(event.target.value)
+                    }
+                    style={
+                      selectedModel
+                        ? { color: "#002743" }
+                        : { color: "#A0AEC0" }
+                    }
+                  >
+                    <option value="" className="text-gray-400">
+                      Version
+                    </option>
+                    {filteredSystemVersion.map((uniqueVersionSystem) => (
+                      <option
+                        key={uniqueVersionSystem}
+                        value={uniqueVersionSystem}
+                      >
+                        {uniqueVersionSystem}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
-              <div className="flex flex-col justify-between min-w-min w-320px min-h-min h-340px gap-6 p-[10px]">
+              <div className="flex flex-col justify-between min-w-min w-320px min-h-min h-340px gap-6 p-[10px] lg:max-h-[100%]">
                 <div className="flex flex-col gap-5">
                   <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
                     RAM :
                   </h3>
-                  <div className="grid grid-cols-4 gap-5">
+                  <div className="flex flex-wrap lg:grid lg:grid-cols-4 gap-5">
                     <button
                       name="ram"
                       type="button"
@@ -376,7 +409,7 @@ function FormModal({
                   <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
                     Mémoire :
                   </h3>
-                  <div className="grid grid-cols-4 gap-5">
+                  <div className="flex flex-wrap lg:grid lg:grid-cols-4 gap-5">
                     <button
                       name="memory"
                       type="button"
@@ -461,7 +494,7 @@ function FormModal({
                   <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
                     Réseau :
                   </h3>
-                  <div className="flex gap-5">
+                  <div className="flex flex-wrap gap-5">
                     <button
                       name="network"
                       type="button"
@@ -502,11 +535,11 @@ function FormModal({
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-5">
-              <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-center text-[#002743]">
+            <div className="flex flex-col gap-5 lg:max-h-[100%] p-[10px] lg:pt-[20px]">
+              <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal lg:text-center text-[#002743] ">
                 Etat de l'appareil :
               </h3>
-              <div className="flex gap-5">
+              <div className="flex gap-5 flex-wrap lg:flex-nowrap">
                 <button
                   name="conditionning"
                   type="button"
@@ -594,29 +627,31 @@ function FormModal({
               </div>
             </div>
             <div>
-              <label className="flex justify-center items-center gap-5">
-                <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-right w-content text-[#002743]">
-                  Prix de référence
-                </h3>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-[20px] h-[20px] text-gray-500 cursor-pointer"
-                  onClick={() => setShowModal(!showModal)}
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="16" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="8" />
-                </svg>
+              <label className="flex flex-col lg:flex-row justify-center items-center gap-5 lg:max-h-[100%]">
+                <div className="flex justify-center items-center gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal lg:text-right w-content text-[#002743]">
+                    Prix de référence
+                  </h3>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-[20px] h-[20px] text-gray-500 cursor-pointer"
+                    onClick={() => setShowModal(!showModal)}
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12" y2="8" />
+                  </svg>
+                </div>
                 <input
                   name="price-reference"
                   type="text"
-                  className="appearance-none w-[30%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743] "
+                  className="appearance-none lg:w-[30%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743] "
                   value={priceReference}
                   onChange={(event) => setPriceReference(event.target.value)}
                 />
@@ -624,7 +659,7 @@ function FormModal({
             </div>
             {showModal && (
               <div>
-                <p className="text-[#002743]">
+                <p className="text-[#002743] text-justify lg:text-justify">
                   Vous pouvez récupérer un prix sur
                   <a
                     href="https://www.kimovil.com/fr/"
@@ -635,11 +670,11 @@ function FormModal({
                 </p>
               </div>
             )}
-            <div className="flex justify-between w-[100%] pl-[20%] pr-[20%]">
+            <div className="flex w-[100%] justify-center gap-10 lg:max-h-[100%]">
               <button
                 type="button"
                 onClick={cancel}
-                className="w-content h-content p-[10px] rounded-[10px] border-2 border-solid border-[#002743] hover:bg-[#002743] hover:text-white font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-[#002743]"
+                className="w-content min-w-[100px] max-w-[80vw] h-content p-[10px] rounded-[10px] custom-bg2-color hover:bg-blue-700 font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-white"
               >
                 Annuler
               </button>
@@ -647,10 +682,10 @@ function FormModal({
                 type="button"
                 onClick={validation}
                 disabled={isFormIncomplete()}
-                className={`w-content h-content p-[10px] rounded-[10px] border-2 border-solid border-[#002743] font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal ${
+                className={`w-content min-w-[100px] h-content p-[10px] rounded-[10px] border-2 border-solid font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-white ${
                   isFormIncomplete()
-                    ? "bg-gray-400 border-none text-white"
-                    : "text-[#002743] hover:bg-[#002743] hover:text-white "
+                    ? "custom-bg2-color border-none opacity-50 cursor-not-allowed"
+                    : "custom-bg2-color hover:bg-blue-700 "
                 }`}
               >
                 Valider
@@ -668,7 +703,7 @@ function FormModal({
       onRequestClose={cancel}
       style={customModalStyles}
       ariaHideApp={false}
-      className="h-fit w-fit border-none rounded-2xl py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
+      className="bg-img-mob lg:bg-img h-[95dvh] min-w-[80vw] lg:min-w-fit lg:w-fit border-none rounded-2xl m-[10px] py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
     >
       {content()}
     </ReactModal>
