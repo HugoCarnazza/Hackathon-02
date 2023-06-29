@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
@@ -31,6 +32,7 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
 
     return result;
   }
+
   const handleDataBaseUpload = (url) => {
     axios
       .get(url)
@@ -39,12 +41,14 @@ function UploadCSV({ csvUrl, setCsvUrl }) {
         Papa.parse(data, {
           complete: (parsedData) => {
             const allresults = parsedData.data;
-            const resultat = tableauToJson(allresults);
-            const results = JSON.stringify(resultat, null, 2);
+            const results = tableauToJson(allresults);
             axios
-              .post(`${import.meta.env.VITE_BACKEND_URL}/smartphone`, results)
-              .then(() => {
-                setCsvUrl("");
+              .post(`${import.meta.env.VITE_BACKEND_URL}/smartphone`, {
+                resultsCsv: results,
+              })
+              // eslint-disable-next-line no-shadow
+              .then((response) => {
+                console.log(response);
               })
               .catch((error) => {
                 console.error("Erreur lors de l'envoi des données :", error);

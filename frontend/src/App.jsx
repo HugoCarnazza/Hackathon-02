@@ -101,6 +101,10 @@ function App() {
               />
             }
           />
+          <Route
+            path="/upload"
+            element={<UploadCSV csvUrl={csvUrl} setCsvUrl={setCsvUrl} />}
+          />
         </Routes>
         <ToggleModal
           openModalToggle={openModalToggle}
