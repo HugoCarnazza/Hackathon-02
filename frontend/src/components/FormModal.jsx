@@ -99,7 +99,7 @@ function FormModal({
       if (selectedConditionning === "Bloqué") {
         ponderation = -10;
       }
-      if (selectedConditionning === "Recondionable") {
+      if (selectedConditionning === "Reconditionnable") {
         ponderation = -5;
       }
       if (selectedConditionning === "Reconditionné") {
