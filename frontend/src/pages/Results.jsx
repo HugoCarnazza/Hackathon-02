@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
+/* eslint-disable react/no-danger */
 import "../styles/Results.scss";
 
 function getCategory(priceEstimate) {
