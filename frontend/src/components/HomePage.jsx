@@ -22,7 +22,7 @@ function HomePage({ openModalToggle }) {
           animationData={animationData}
           play
           loop
-          style={{ width: 500, height: 400 }}
+          style={{ width: 500, height: 500 }}
         />
       </div>
     </div>

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Hamburger from "hamburger-react";
 import BurgerMenu from "./BurgerMenu";
@@ -9,6 +9,7 @@ import addSymbol from "../assets/add_symbol.png";
 import interrogation from "../assets/interrogation.png";
 
 function NavBar({ burgerOpen, setBurgerOpen, openModalToggle }) {
+  const navigate = useNavigate();
   return (
     <>
       <div className="nav flex items-center md:flex-col justify-between fixed top-0 left-0 w-screen md:w-1/5 h-65px md:h-screen z-10 md:z-0 text-white bg-[#002743]">
@@ -45,6 +46,7 @@ function NavBar({ burgerOpen, setBurgerOpen, openModalToggle }) {
           <button
             type="button"
             className="flex items-center justify-center gap-3 w-[100%] mb-[56px]"
+            onClick={() => navigate("/faq")}
           >
             <img src={interrogation} alt="symbole plus" />
             <p>FAQ</p>

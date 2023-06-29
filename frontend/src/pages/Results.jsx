@@ -16,6 +16,7 @@ function Results({ selectedValues }) {
           <p>Réseau : {selectedValues.network}</p>
           <p>Conditionnement : {selectedValues.conditionning}</p>
           <p>Prix de référence : {selectedValues.price_reference} euros</p>
+          <p>Prix estimé : {selectedValues.price_estimate} euros</p>
         </div>
         <div className="results-images">
           <img src="src/assets/iphone.png" alt="Logo" />
