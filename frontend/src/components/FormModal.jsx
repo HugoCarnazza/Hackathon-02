@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactModal from "react-modal";
+import LogoIOS from "../assets/logo-ios.png";
+import LogoAndroid from "../assets/logo-android-resize.png";
 
 // eslint-disable-next-line react/prop-types
 function FormModal({
@@ -17,7 +19,8 @@ function FormModal({
   screenSize,
   selectedNetwork,
   selectedConditionning,
-  priceRefecence,
+  priceReference,
+  priceEstimate,
   setSelectedSystemId,
   setSelectedBrand,
   setSelectedModel,
@@ -27,7 +30,8 @@ function FormModal({
   setScreenSize,
   setSelectedNetwork,
   setSelectedConditionning,
-  setPriceRefecence,
+  setPriceReference,
+  setPriceEstimate,
 }) {
   const customModalStyles = {
     overlay: {
@@ -83,6 +87,36 @@ function FormModal({
     .filter((item) => (selectedBrand ? item.brand === selectedBrand : false))
     .map((item) => item.model);
 
+  useEffect(() => {
+    const calculatePriceEstimate = () => {
+      let ponderation = 0;
+      if (selectedConditionning === "Deee") {
+        ponderation = -100;
+      }
+      if (selectedConditionning === "Réparable") {
+        ponderation = -50;
+      }
+      if (selectedConditionning === "Bloqué") {
+        ponderation = -10;
+      }
+      if (selectedConditionning === "Recondionable") {
+        ponderation = -5;
+      }
+      if (selectedConditionning === "Reconditionné") {
+        ponderation = 0;
+      }
+      if (selectedConditionning === "Bon") {
+        ponderation = 5;
+      }
+      if (selectedConditionning === "Parfait") {
+        ponderation = 10;
+      }
+      setPriceEstimate(priceReference + (priceReference * ponderation) / 100);
+    };
+
+    calculatePriceEstimate();
+  }, [priceReference, selectedConditionning]);
+
   const validation = () => {
     setSelectedValues({
       brand: selectedBrand,
@@ -94,7 +128,8 @@ function FormModal({
       screen_size: screenSize,
       network: selectedNetwork,
       conditionning: selectedConditionning,
-      price_reference: priceRefecence,
+      price_reference: priceReference,
+      price_estimate: priceEstimate,
     });
     setModalFormOpen(false);
   };
@@ -110,62 +145,102 @@ function FormModal({
     setScreenSize("");
     setSelectedNetwork("");
     setSelectedConditionning("");
-    setPriceRefecence("");
+    setPriceReference("");
+  };
+
+  const isFormIncomplete = () => {
+    if (
+      selectedBrand === null ||
+      selectedModel === null ||
+      selectedSystemId === "" ||
+      selectedVersionSystem === "" ||
+      selectedRam === "" ||
+      selectedMemory === "" ||
+      screenSize === "" ||
+      selectedNetwork === "" ||
+      selectedConditionning === "" ||
+      priceReference === ""
+    ) {
+      return true;
+    }
+    return false;
   };
 
   const content = () => {
     return (
       <div>
         {isLoaded && (
-          <div className="flex flex-col items-center w-[100%]">
+          <div className="flex flex-col gap-4 items-center w-[100%]">
             <div className="flex justify-between">
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    id="Android"
-                    name="Android"
-                    value="2"
-                    onChange={handleSystemChange}
-                    checked={selectedSystemId === 2}
-                  />
-                  Android
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    id="Apple"
-                    name="Apple"
-                    value="1"
-                    onChange={handleSystemChange}
-                    checked={selectedSystemId === 1}
-                  />
-                  Apple
-                </label>
-              </div>
+              <label className="flex justify-center">
+                <input
+                  type="checkbox"
+                  id="Android"
+                  name="Android"
+                  value="2"
+                  onChange={handleSystemChange}
+                  checked={selectedSystemId === 2}
+                  className="hidden"
+                />
+                <img
+                  src={LogoAndroid}
+                  alt="android-logo"
+                  className={`${
+                    selectedSystemId === 2 ? "bg-[#002743]" : "bg-white"
+                  } hover:bg-[#002743c2] hover:cursor-pointer text-white font-bold py-2 px-4 rounded w-[30%]`}
+                />
+              </label>
+              <label className="flex justify-center">
+                <input
+                  type="checkbox"
+                  id="Apple"
+                  name="Apple"
+                  value="1"
+                  onChange={handleSystemChange}
+                  checked={selectedSystemId === 1}
+                  className="hidden"
+                />
+                <img
+                  src={LogoIOS}
+                  alt="ios-logo"
+                  className={`${
+                    selectedSystemId === 1 ? "bg-[#002743]" : "bg-white"
+                  } hover:bg-[#002743c2] hover:cursor-pointer text-white font-bold py-2 px-4 rounded w-[30%]`}
+                />
+              </label>
             </div>
             <div>
-              <label>
-                System Version:
+              <label className="flex justify-center items-center gap-5">
+                <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left w-[100%] text-[#002743]">
+                  System Version:
+                </h3>
                 <input
+                  className="appearance-none w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743]"
                   type="text"
                   value={selectedVersionSystem}
                   onChange={(e) => setSelectedVersionSystem(e.target.value)}
                 />
               </label>
             </div>
-            <div className="flex">
-              <div className="flex flex-col justify-between">
-                <div>
+            <div className="flex justify-between w-[100%]">
+              <div className="flex flex-col justify-between min-w-min w-320px min-h-min h-340px gap-6 p-[10px]">
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    Marque :
+                  </h3>
                   <select
+                    className="w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] "
                     name="brand"
                     id="brand-select"
                     onChange={handleBrandChange}
                     value={selectedBrand || ""}
+                    style={
+                      selectedSystemId
+                        ? { color: "#002743" }
+                        : { color: "#A0AEC0" }
+                    }
                   >
-                    <option value="">Select a brand</option>
+                    <option value="">Marque</option>
                     {uniqueBrandsArray.map((uniqueBrand) => (
                       <option key={uniqueBrand} value={uniqueBrand}>
                         {uniqueBrand}
@@ -173,14 +248,25 @@ function FormModal({
                     ))}
                   </select>
                 </div>
-                <div>
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    Modèle :
+                  </h3>
                   <select
+                    className="w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] "
                     name="model"
                     id="model-select"
                     value={selectedModel || ""}
                     onChange={(event) => setSelectedModel(event.target.value)}
+                    style={
+                      selectedBrand
+                        ? { color: "#002743" }
+                        : { color: "#A0AEC0" }
+                    }
                   >
-                    <option value="">Select a model</option>
+                    <option value="" className="text-gray-400">
+                      Modèle
+                    </option>
                     {filteredModels.map((uniqueModel) => (
                       <option key={uniqueModel} value={uniqueModel}>
                         {uniqueModel}
@@ -189,29 +275,32 @@ function FormModal({
                   </select>
                 </div>
                 <div>
-                  <label>
-                    Taille de l'écran (en pouces):
+                  <label className="flex flex-col gap-5">
+                    <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                      Ecran (en pouces):
+                    </h3>
                     <input
+                      className="appearance-none w-[100%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743]"
                       name="screen_size"
-                      type="number"
+                      type="text"
                       value={screenSize}
                       onChange={(event) => setScreenSize(event.target.value)}
                     />
                   </label>
                 </div>
               </div>
-              <div className="flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-bold mb-2">
-                    Sélectionnez la quantité de RAM :
+              <div className="flex flex-col justify-between min-w-min w-320px min-h-min h-340px gap-6 p-[10px]">
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    RAM :
                   </h3>
-                  <div className="flex space-x-2">
+                  <div className="grid grid-cols-4 gap-5">
                     <button
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "2" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "2" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("2")}
                     >
                       2 Go
@@ -220,8 +309,8 @@ function FormModal({
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "3" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "3" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("3")}
                     >
                       3 Go
@@ -230,8 +319,8 @@ function FormModal({
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "4" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "4" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("4")}
                     >
                       4 Go
@@ -240,8 +329,8 @@ function FormModal({
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "6" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "6" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("6")}
                     >
                       6 Go
@@ -250,8 +339,8 @@ function FormModal({
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "8" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "8" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("8")}
                     >
                       8 Go
@@ -260,8 +349,8 @@ function FormModal({
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "12" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "12" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("12")}
                     >
                       12 Go
@@ -270,25 +359,25 @@ function FormModal({
                       name="ram"
                       type="button"
                       className={`${
-                        selectedRam === "16" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedRam === "16" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedRam("16")}
                     >
                       16 Go
                     </button>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">
-                    Sélectionnez la quantité de mémoire :
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    Mémoire :
                   </h3>
-                  <div className="flex space-x-2">
+                  <div className="grid grid-cols-4 gap-5">
                     <button
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "16" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "16" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("16")}
                     >
                       16 Go
@@ -297,8 +386,8 @@ function FormModal({
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "32" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "32" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("32")}
                     >
                       32 Go
@@ -307,8 +396,8 @@ function FormModal({
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "64" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "64" ? "bg-[#002743]" : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("64")}
                     >
                       64 Go
@@ -317,8 +406,10 @@ function FormModal({
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "128" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "128"
+                          ? "bg-[#002743]"
+                          : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("128")}
                     >
                       128 Go
@@ -327,8 +418,10 @@ function FormModal({
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "256" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "256"
+                          ? "bg-[#002743]"
+                          : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("256")}
                     >
                       256 Go
@@ -337,8 +430,10 @@ function FormModal({
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "512" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "512"
+                          ? "bg-[#002743]"
+                          : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("512")}
                     >
                       512 Go
@@ -347,25 +442,29 @@ function FormModal({
                       name="memory"
                       type="button"
                       className={`${
-                        selectedMemory === "1To" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedMemory === "1To"
+                          ? "bg-[#002743]"
+                          : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedMemory("1To")}
                     >
                       1 To
                     </button>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">
-                    Sélectionnez le type de réseau :
+                <div className="flex flex-col gap-5">
+                  <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-left text-[#002743]">
+                    Réseau :
                   </h3>
-                  <div className="flex space-x-2">
+                  <div className="flex gap-5">
                     <button
                       name="network"
                       type="button"
                       className={`${
-                        selectedNetwork === "4G" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedNetwork === "4G"
+                          ? "bg-[#002743]"
+                          : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedNetwork("4G")}
                     >
                       4G
@@ -375,9 +474,9 @@ function FormModal({
                       type="button"
                       className={`${
                         selectedNetwork === "4G+"
-                          ? "bg-blue-500"
+                          ? "bg-[#002743]"
                           : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedNetwork("4G+")}
                     >
                       4G+
@@ -386,8 +485,10 @@ function FormModal({
                       name="network"
                       type="button"
                       className={`${
-                        selectedNetwork === "5G" ? "bg-blue-500" : "bg-gray-300"
-                      } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
+                        selectedNetwork === "5G"
+                          ? "bg-[#002743]"
+                          : "bg-gray-300"
+                      } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
                       onClick={() => setSelectedNetwork("5G")}
                     >
                       5G
@@ -396,20 +497,20 @@ function FormModal({
                 </div>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-bold mb-2">
-                Sélectionnez l'état de l'appareil :
+            <div className="flex flex-col gap-5">
+              <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-center text-[#002743]">
+                Etat de l'appareil :
               </h3>
-              <div className="flex space-x-2">
+              <div className="flex gap-5">
                 <button
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "-100%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "DEEE"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("-100%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("DEEE")}
                 >
                   DEEE
                 </button>
@@ -417,11 +518,11 @@ function FormModal({
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "-50%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "Réparable"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("-50%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("Réparable")}
                 >
                   Réparable
                 </button>
@@ -429,11 +530,11 @@ function FormModal({
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "-10%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "Bloqué"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("-10%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("Bloqué")}
                 >
                   Bloqué
                 </button>
@@ -441,11 +542,11 @@ function FormModal({
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "-5%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "Reconditionnable"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("-5%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("Reconditionnable")}
                 >
                   Reconditionnable
                 </button>
@@ -453,11 +554,11 @@ function FormModal({
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "0%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "Reconditionné"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("0%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("Reconditionné")}
                 >
                   Reconditionné
                 </button>
@@ -465,11 +566,11 @@ function FormModal({
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "5%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "Bon"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("5%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("Bon")}
                 >
                   Bon
                 </button>
@@ -477,57 +578,77 @@ function FormModal({
                   name="conditionning"
                   type="button"
                   className={`${
-                    selectedConditionning === "10%"
-                      ? "bg-blue-500"
+                    selectedConditionning === "Parfait"
+                      ? "bg-[#002743]"
                       : "bg-gray-300"
-                  } hover:bg-blue-400 text-white font-bold py-2 px-4 rounded`}
-                  onClick={() => setSelectedConditionning("10%")}
+                  } hover:bg-[#002743c2] text-white font-bold py-2 px-4 rounded`}
+                  onClick={() => setSelectedConditionning("Parfait")}
                 >
                   Parfait
                 </button>
               </div>
             </div>
             <div>
-              <div className="flex items-center mb-2">
-                <h3 className="text-lg font-bold">Prix de référence</h3>
-                <div className="ml-2 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-5 h-5 text-gray-500 cursor-pointer"
-                    onMouseEnter={() => setShowModal(true)}
-                    onMouseLeave={() => setShowModal(false)}
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="16" x2="12" y2="12" />
-                    <line x1="12" y1="8" x2="12" y2="8" />
-                  </svg>
-                  {showModal && (
-                    <div className="ml-2 bg-white bg-opacity-90 shadow rounded absolute mt-8">
-                      <p>Vous devez récupérer le prix de référence sur...</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <input
-                name="price-reference"
-                type="number"
-                className="border border-gray-300 rounded px-4 py-2 w-48"
-                value={priceRefecence}
-                onChange={(event) => setPriceRefecence(event.target.value)}
-              />
+              <label className="flex justify-center items-center gap-5">
+                <h3 className="font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-right w-content text-[#002743]">
+                  Prix de référence
+                </h3>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-[20px] h-[20px] text-gray-500 cursor-pointer"
+                  onClick={() => setShowModal(!showModal)}
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12" y2="8" />
+                </svg>
+                <input
+                  name="price-reference"
+                  type="text"
+                  className="appearance-none w-[30%] h-content p-[7px] rounded-[6px] focus:outline-none border-2 border-solid border-t-slate-200 border-l-slate-200 border-r-slate-200 border-b-[#002743] text-[#002743] "
+                  value={priceReference}
+                  onChange={(event) => setPriceReference(event.target.value)}
+                />
+              </label>
             </div>
-            <div className="modal-footer">
-              <button type="button" onClick={validation}>
-                Valider
-              </button>
-              <button type="button" onClick={cancel}>
+            {showModal && (
+              <div>
+                <p className="text-[#002743]">
+                  Vous pouvez récupérer un prix sur
+                  <a
+                    href="https://www.kimovil.com/fr/"
+                    className="text-blue-500 underline ml-2"
+                  >
+                    https://www.kimovil.com/fr/
+                  </a>
+                </p>
+              </div>
+            )}
+            <div className="flex justify-between w-[100%] pl-[20%] pr-[20%]">
+              <button
+                type="button"
+                onClick={cancel}
+                className="w-content h-content p-[10px] rounded-[10px] border-2 border-solid border-[#002743] hover:bg-[#002743] hover:text-white font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal text-[#002743]"
+              >
                 Annuler
+              </button>
+              <button
+                type="button"
+                onClick={validation}
+                disabled={isFormIncomplete()}
+                className={`w-content h-content p-[10px] rounded-[10px] border-2 border-solid border-[#002743] font-fira-sans text-[22px] font-bold leading-[26px] tracking-normal ${
+                  isFormIncomplete()
+                    ? "bg-gray-400 border-none text-white"
+                    : "text-[#002743] hover:bg-[#002743] hover:text-white "
+                }`}
+              >
+                Valider
               </button>
             </div>
           </div>
@@ -542,7 +663,7 @@ function FormModal({
       onRequestClose={cancel}
       style={customModalStyles}
       ariaHideApp={false}
-      className="h-fit lg:h-[610px] w-[60vw] lg:w-[50vw] border-none rounded-2xl p-5 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
+      className="h-fit w-fit border-none rounded-2xl py-5 px-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto bg-white flex"
     >
       {content()}
     </ReactModal>

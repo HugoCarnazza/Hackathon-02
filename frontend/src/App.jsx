@@ -5,7 +5,7 @@ import "./reset.css";
 import "./App.css";
 
 function App() {
-  const [modalFormOpen, setModalFormOpen] = useState(false);
+  const [modalFormOpen, setModalFormOpen] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [selectedValues, setSelectedValues] = useState({
     brand: null,
@@ -29,7 +29,8 @@ function App() {
   const [screenSize, setScreenSize] = useState("");
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedConditionning, setSelectedConditionning] = useState("");
-  const [priceRefecence, setPriceRefecence] = useState("");
+  const [priceReference, setPriceReference] = useState("");
+  const [priceEstimate, setPriceEstimate] = useState("");
   return (
     <div className="App overflow-hidden">
       <FormModal
@@ -45,7 +46,8 @@ function App() {
         screenSize={screenSize}
         selectedNetwork={selectedNetwork}
         selectedConditionning={selectedConditionning}
-        priceRefecence={priceRefecence}
+        priceReference={priceReference}
+        priceEstimate={priceEstimate}
         setSelectedSystemId={setSelectedSystemId}
         setSelectedBrand={setSelectedBrand}
         setSelectedModel={setSelectedModel}
@@ -55,7 +57,8 @@ function App() {
         setScreenSize={setScreenSize}
         setSelectedNetwork={setSelectedNetwork}
         setSelectedConditionning={setSelectedConditionning}
-        setPriceRefecence={setPriceRefecence}
+        setPriceReference={setPriceReference}
+        setPriceEstimate={setPriceEstimate}
       />
       <NavBar />
     </div>
