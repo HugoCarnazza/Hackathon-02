@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import Modal from "react-modal";
+import Toggle from "react-toggle";
 import ToggleButton from "./ToggleButton";
-import logo from "../assets/Logo_1.png";
+import logo from "../assets/logo-em.png";
+import coche from "../assets/coche.png";
 import cross from "../assets/cross.png";
+import "../toggle.css";
 
 function ToggleModal({
   closeModalToggle,
@@ -44,6 +47,18 @@ function ToggleModal({
     }));
   };
 
+  const toggleAll = () => {
+    const allTrue = Object.values(toggleStates).every(
+      (state) => state === true
+    );
+    const updatedStates = {};
+
+    Object.keys(toggleStates).forEach((key) => {
+      updatedStates[key] = !allTrue;
+    });
+
+    setToggleStates(updatedStates);
+  };
   return (
     <Modal
       isOpen={modalToggleIsOpen}
@@ -69,7 +84,7 @@ function ToggleModal({
             3 - Je récupère le récapitulatif complet pour mon modèle
           </p>
         </div>
-        <img src={logo} alt="logo" className="w-[10dvw] block ml-auto" />
+        <img src={logo} alt="logo" className="w-[17dvw] block mr-auto" />
       </div>
       <div className="w-full p-5 xl:h-full bg-img-mob xl:bg-img xl:text-blue-950   xl:w-[75%] xl:ml-auto">
         <button
@@ -86,41 +101,65 @@ function ToggleModal({
           VERIFICATION
         </h1>
         <div className="custom-bg-color xl:w-[70%] w-[95%] mx-auto mb-12 p-5 flex flex-col justify-between gap-5 xl:gap-7">
+          <div className="flex justify-between items-center mb-3">
+            <div className="flex gap-3 items-center">
+              <img
+                src={coche}
+                alt="validation coche"
+                className="xl:w-[2dvw] w-[5dvw]"
+              />
+              <h3 className="mr-2 text-blue-950 font-bold">Tout est OK ?</h3>
+            </div>
+            <label
+              className="flex items-center cursor-pointer"
+              htmlFor="toggleAll"
+            >
+              <Toggle
+                id="toggleAll"
+                className={`${
+                  Object.values(toggleStates).every((state) => state === true)
+                    ? "bg-green-500"
+                    : "bg-blue-500"
+                }`}
+                checked={Object.values(toggleStates).every(
+                  (state) => state === true
+                )}
+                onChange={toggleAll}
+              />
+              <span className="ml-2 hidden">Toggle All</span>
+            </label>
+          </div>
+
           <ToggleButton
             label="Mise à jour supérieur à Android 8 / iOS 4?"
             id="Os"
             isChecked={toggleStates.os}
             handleToggleChange={() => handleToggleChange("os")}
           />
-
           <ToggleButton
             label="Possède t-il 4gb de ram ou plus ?"
             id="Ram"
             isChecked={toggleStates.ram}
             handleToggleChange={() => handleToggleChange("ram")}
           />
-
           <ToggleButton
             label="Stockage de 32gb ou plus ?"
             id="Mémoire"
             isChecked={toggleStates.memory}
             handleToggleChange={() => handleToggleChange("memory")}
           />
-
           <ToggleButton
             label="L'écran fait-il plus de 4 pouces ?"
             id="Ecran"
             isChecked={toggleStates.screen}
             handleToggleChange={() => handleToggleChange("screen")}
           />
-
           <ToggleButton
             label="Est-il connectable au réseau 4g ou plus "
             id="Réseau"
             isChecked={toggleStates.network}
             handleToggleChange={() => handleToggleChange("network")}
           />
-
           <ToggleButton
             label="Possèdez-vous le chargeur et le câble ? "
             id="Chargeur"
