@@ -10,4 +10,9 @@ router.put("/items/:id", itemControllers.edit);
 router.post("/items", itemControllers.add);
 router.delete("/items/:id", itemControllers.destroy);
 
+const smartphoneControllers = require("./controllers/smartphoneControllers");
+
+router.get("/smartphone", smartphoneControllers.readSystemId);
+router.post("/smartphone", smartphoneControllers.addSmartphonesFromCSV);
+
 module.exports = router;
