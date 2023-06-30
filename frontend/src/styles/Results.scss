@@ -182,7 +182,8 @@
   @media (max-width: 768px) {
     margin-left: 0;
     .results-container {
-      flex-direction: column;
+      flex-direction: column-reverse;
+      gap: 3rem;
       padding: 4rem;
       margin-left: 0;
 
