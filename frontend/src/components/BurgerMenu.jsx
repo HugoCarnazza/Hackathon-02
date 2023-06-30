@@ -8,7 +8,7 @@ function BurgerMenu({ burgerOpen, setBurgerOpen, openModalToggle }) {
   const navigate = useNavigate();
   return (
     <div
-      className={`transition-container z-10 fixed top-0 left-[5vw] duration-500 w-[90vw] mx-auto mt-[50px] bg-[#002743] rounded-lg ${
+      className={`transition-container z-10 fixed top-0 left-[5vw] duration-500 w-[90vw] mx-auto mt-[60px] bg-[#002743] rounded-lg ${
         burgerOpen ? "" : "hidden"
       }`}
     >
