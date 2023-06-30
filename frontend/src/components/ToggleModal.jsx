@@ -131,7 +131,7 @@ function ToggleModal({
           </div>
 
           <ToggleButton
-            label="Mise à jour supérieur à Android 8 / iOS 4?"
+            label="Mise à jour supérieure à Android 8 / iOS 4 ?"
             id="Os"
             isChecked={toggleStates.os}
             handleToggleChange={() => handleToggleChange("os")}
@@ -155,7 +155,7 @@ function ToggleModal({
             handleToggleChange={() => handleToggleChange("screen")}
           />
           <ToggleButton
-            label="Est-il connectable au réseau 4g ou plus "
+            label="Peut-il se connecter à un réseau 4G ou supérieur ? "
             id="Réseau"
             isChecked={toggleStates.network}
             handleToggleChange={() => handleToggleChange("network")}
